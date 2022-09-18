@@ -20,17 +20,42 @@ export default function Sform() {
       randomImage: url,
     }));
   }
+
+  function handleChange(e) {
+    setMemeImage((prev) => {
+      return {
+        ...prev,
+        [e.target.name]: e.target.value,
+      };
+    });
+  }
   return (
     <div className="sform">
       <div className="form">
-        <input className="tbox1" type="text" placeholder="Top Text"></input>
-        <input className="tbox2" type="text" placeholder="Bottom Text"></input>
+        <input
+          name="topText"
+          className="tbox1"
+          type="text"
+          placeholder="Top Text"
+          onChange={handleChange}
+          value={memeImage.topText}
+        ></input>
+        <input
+          name="bottomText"
+          className="tbox2"
+          type="text"
+          placeholder="Bottom Text"
+          onChange={handleChange}
+          value={memeImage.bottomText}
+        ></input>
         <button onClick={handleClick} className="sbtn" type="submit">
           Get a new meme image
         </button>
       </div>
-      <div className="mImage">
-        <img src={memeImage.randomImage}></img>
+      <div className="meme">
+        <img src={memeImage.randomImage} className="meme--image" />
+        <h2 className="meme--text top">{memeImage.topText}</h2>
+        <h2 className="meme--text bottom">{memeImage.bottomText}</h2>
       </div>
     </div>
   );
