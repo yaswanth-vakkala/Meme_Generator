@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sform.css";
-import MemesData from "../MemesData";
 
 export default function Sform() {
   const [memeImage, setMemeImage] = useState({
@@ -8,13 +7,15 @@ export default function Sform() {
     bottomText: "",
     randomImage: "http://i.imgflip.com/1bij.jpg",
   });
-  const [allMemesData, setAllMemesData] = useState(MemesData);
-
+  const [allMemesData, setAllMemesData] = useState("");
+  useEffect(() => {
+    fetch("https://api.imgflip.com/get_memes")
+      .then((res) => res.json())
+      .then((data) => setAllMemesData(data.data.memes));
+  }, []);
   function handleClick() {
     const url =
-      allMemesData.data.memes[
-        Math.floor(Math.random() * allMemesData.data.memes.length)
-      ].url;
+      allMemesData[Math.floor(Math.random() * allMemesData.length)].url;
     setMemeImage((prevImage) => ({
       ...prevImage,
       randomImage: url,
